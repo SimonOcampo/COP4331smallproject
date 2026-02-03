@@ -9,14 +9,19 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("SELECT ID, FirstName, LastName FROM Users WHERE Login=? AND Password =?");
-		$stmt->bind_param("ss", $inData["login"], $inData["password"]);
+		$stmt = $conn->prepare("SELECT ID, FirstName, LastName, Password FROM Users WHERE Login=?");
+		$stmt->bind_param("s", $inData["login"]);
 		$stmt->execute();
 		$result = $stmt->get_result();
 
 		if( $row = $result->fetch_assoc()  )
 		{
-			returnWithInfo( $row["FirstName"], $row["LastName"], $row["ID"] );
+			if( password_verify($inData["password"], $row["Password"]) ){
+				returnWithInfo( $row["FirstName"], $row["LastName"], $row["ID"] );
+			}
+			else{
+				returnWithError( "Invalid login" );
+			}
 		}
 		else
 		{
@@ -46,7 +51,7 @@
 	
 	function returnWithInfo( $FirstName, $lastName, $id )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $FirstName . '","lastName":"' . $lastName . '","error":""}';
+		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
