@@ -5,7 +5,7 @@
     $searchResults = "";
     $searchCount = 0;
 
-    $conn = new mysqli("localhost", "root", "", "ContactManager");
+    include('config.php');
     if($conn->connect_error){
         returnWithError($conn->connect_error);
     }
