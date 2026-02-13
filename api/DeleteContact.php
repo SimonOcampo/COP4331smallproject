@@ -2,7 +2,17 @@
 
     $inData = getRequestInfo();
 
-    $conn = new mysqli("localhost", "root", "", "ContactManager");
+    $userId = isset($inData["userId"]) ? $inData["userId"] : null;
+    $id = isset($inData["id"]) ? $inData["id"] : null;
+    $email = isset($inData["email"]) ? trim($inData["email"]) : null;
+    $phone = isset($inData["phone"]) ? trim($inData["phone"]) : null;
+
+    if ($userId === null || ($id === null && $email === null && $phone === null)) {
+        returnWithError("Missing required fields - need userId and at least one of: id, email, or phone");
+        exit;
+    }
+
+    include('config.php');
     
     if($conn->connect_error){
         returnWithError($conn->connect_error);
@@ -16,10 +26,10 @@
         );
 
         $stmt->bind_param("iiss", 
-            $inData["userId"], 
-            $inData["id"], 
-            $inData["email"], 
-            $inData["phone"]
+            $userId, 
+            $id, 
+            $email, 
+            $phone
         );
 
         $stmt->execute();

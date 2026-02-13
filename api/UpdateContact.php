@@ -2,13 +2,19 @@
 
 	$inData = getRequestInfo();
 
-	$userId = $inData["userId"];
-	$contactFirstName = $inData["contactFirstName"]; 
-    $contactLastName = $inData["contactLastName"]; 
-	$phone = $inData["phone"];
-    $email = $inData["email"]; 
+	$userId = isset($inData["userId"]) ? $inData["userId"] : null;
+	$id = isset($inData["id"]) ? $inData["id"] : null;
+	$contactFirstName = isset($inData["contactFirstName"]) ? trim($inData["contactFirstName"]) : ""; 
+    $contactLastName = isset($inData["contactLastName"]) ? trim($inData["contactLastName"]) : "";   
+	$phone = isset($inData["phone"]) ? trim($inData["phone"]) : "";
+    $email = isset($inData["email"]) ? trim($inData["email"]) : ""; 
 
-	$conn = new mysqli("localhost", "root", "", "ContactManager");
+	if ($userId === null || $id === null || $contactFirstName === "" || $contactLastName === "") {
+		returnWithError("Missing required fields");
+		exit;
+	}
+
+	include('config.php');
 	
     if ($conn->connect_error) 
 	{
@@ -17,7 +23,7 @@
 	else
 	{
 		$stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Phone=?, Email=? WHERE UserID=? AND ID=?");
-		$stmt->bind_param("ssssii", $contactFirstName, $contactLastName, $phone, $email, $userId, $inData["id"]);
+		$stmt->bind_param("ssssii", $contactFirstName, $contactLastName, $phone, $email, $userId, $id);
 		$stmt->execute();
 		
 		// Success check
