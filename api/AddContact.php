@@ -2,13 +2,18 @@
 
 	$inData = getRequestInfo();
 
-	$userId = $inData["userId"];
-	$contactFirstName = $inData["contactFirstName"]; 
-    $contactLastName = $inData["contactLastName"]; 
-	$phone = $inData["phone"];
-    $email = $inData["email"]; 
+	$userId = isset($inData["userId"]) ? $inData["userId"] : null;
+	$contactFirstName = isset($inData["contactFirstName"]) ? trim($inData["contactFirstName"]) : ""; 
+    $contactLastName = isset($inData["contactLastName"]) ? trim($inData["contactLastName"]) : ""; 
+	$phone = isset($inData["phone"]) ? trim($inData["phone"]) : "";
+    $email = isset($inData["email"]) ? trim($inData["email"]) : ""; 
 
-	$conn = new mysqli("localhost", "root", "", "ContactManager");
+	if ($userId === null || $contactFirstName === "" || $contactLastName === "") {
+		returnWithError("Missing required fields");
+		exit;
+	}
+
+	include('config.php');
 	
     if ($conn->connect_error) 
 	{
@@ -21,7 +26,7 @@
 		$stmt->execute();
 		$stmt->close();
 		$conn->close();
-		returnWithError("");
+		returnWithInfo("Contact added successfully");
 	}
 
 	function getRequestInfo()
@@ -38,6 +43,12 @@
 	function returnWithError( $err )
 	{
 		$retValue = '{"error":"' . $err . '"}';
+		sendResultInfoAsJson( $retValue );
+	}
+	
+	function returnWithInfo( $msg )
+	{
+		$retValue = '{"result":"' . $msg . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
