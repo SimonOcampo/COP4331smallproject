@@ -1,5 +1,8 @@
 <?php
 
+    // Sets header early to ensure all output is treated as JSON
+    header('Content-type: application/json');
+
     $inData = getRequestInfo();
 
     if ($inData === null) {
@@ -14,17 +17,20 @@
 
     if ($firstName === "" || $lastName === "" || $login === "" || $password === "")
     {
-        returnWithError("Missing required fields: firstName, lastName, login, and password are required.");
+        returnWithError("Missing required fields");
         exit;
     }
 
     include('config.php');
-    if ($conn->connect_error)
+    
+    // Checks connection explicitly
+    if (!$conn || $conn->connect_error)
     {
-        returnWithError($conn->connect_error);
+        returnWithError("Database connection failed: " . ($conn->connect_error ?? "Unknown error"));
         exit;
     }
 
+    // Checks if the login already exists
     $stmt = $conn->prepare("SELECT ID FROM Users WHERE Login = ?");
     $stmt->bind_param("s", $login);
     $stmt->execute();
@@ -33,12 +39,12 @@
     if ($result && $result->fetch_assoc())
     {
         $stmt->close();
-        $conn->close();
         returnWithError("Login already exists");
         exit;
     }
     $stmt->close();
 
+    // Hashes password and inserts
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $firstName, $lastName, $login, $passwordHash);
@@ -52,10 +58,10 @@
     }
     else
     {
-        $err = $stmt->error;
+        $errorMsg = $stmt->error;
         $stmt->close();
         $conn->close();
-        returnWithError($err);
+        returnWithError("Insert failed: " . $errorMsg);
     }
 
     function getRequestInfo()
@@ -63,22 +69,17 @@
         return json_decode(file_get_contents('php://input'), true);
     }
 
-    function sendResultInfoAsJson($obj)
-    {
-        header('Content-type: application/json');
-        echo $obj;
-    }
-
     function returnWithError($err)
     {
-        $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
-        sendResultInfoAsJson($retValue);
+        // Use an array and json_encode to prevent manual string errors
+        $retValue = array("id" => 0, "firstName" => "", "lastName" => "", "error" => $err);
+        echo json_encode($retValue);
     }
 
     function returnWithInfo($firstName, $lastName, $id)
     {
-        $retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
-        sendResultInfoAsJson($retValue);
+        // Ensuring ID is cast to an integer to prevent empty values
+        $retValue = array("id" => (int)$id, "firstName" => $firstName, "lastName" => $lastName, "error" => "");
+        echo json_encode($retValue);
     }
-
 ?>
