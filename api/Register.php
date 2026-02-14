@@ -2,6 +2,11 @@
 
     $inData = getRequestInfo();
 
+    if ($inData === null) {
+        returnWithError("Invalid JSON format or empty request body");
+        exit;
+    }
+
     $firstName = isset($inData["firstName"]) ? trim($inData["firstName"]) : "";
     $lastName  = isset($inData["lastName"])  ? trim($inData["lastName"])  : "";
     $login     = isset($inData["login"])     ? trim($inData["login"])     : "";
@@ -9,7 +14,7 @@
 
     if ($firstName === "" || $lastName === "" || $login === "" || $password === "")
     {
-        returnWithError("Missing required fields");
+        returnWithError("Missing required fields: firstName, lastName, login, and password are required.");
         exit;
     }
 
@@ -20,7 +25,6 @@
         exit;
     }
 
-    // Checks if the login already exists
     $stmt = $conn->prepare("SELECT ID FROM Users WHERE Login = ?");
     $stmt->bind_param("s", $login);
     $stmt->execute();
@@ -33,13 +37,9 @@
         returnWithError("Login already exists");
         exit;
     }
-
     $stmt->close();
 
-    // Hashes password before storing
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-    // Inserts new user
     $stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $firstName, $lastName, $login, $passwordHash);
 
