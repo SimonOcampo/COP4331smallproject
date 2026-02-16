@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Contact Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main id="auth-section" class="container">
+        <div class="auth-card">
+            <h1 id="auth-title">Login</h1>
+            <div id="auth-error" class="error-msg" aria-live="polite"></div>
+            
+            <form id="auth-form">
+                <div id="register-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="login">Username</label>
+                    <input type="text" id="login" name="login" required placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                </div>
+
+                <button type="submit" id="auth-submit-btn" class="btn-primary">Log In</button>
+            </form>
+            
+            <p class="toggle-auth">
+                <span id="auth-toggle-text">Don't have an account?</span> 
+                <button type="button" id="toggle-auth-btn" class="btn-link">Sign Up</button>
+            </p>
+        </div>
+    </main>
+
+    <main id="dashboard-section" class="container" style="display: none;">
+        <header class="dashboard-header">
+            <h1 id="welcome-msg">Welcome!</h1>
+            <button id="logout-btn" class="btn-secondary">Log Out</button>
+        </header>
+
+        <section class="controls-section">
+            <div class="search-bar form-group">
+                <label for="search-input" class="visually-hidden">Search Contacts</label>
+                <input type="text" id="search-input" placeholder="Search by name, phone, or email...">
+            </div>
+            <button id="show-add-modal-btn" class="btn-primary"> + Add Contact</button>
+        </section>
+
+        <div id="contact-error" class="error-msg" aria-live="polite"></div>
+
+        <section class="contacts-grid" id="contacts-container">
+            </section>
+    </main>
+
+    <div id="contact-modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="modal-title">Add Contact</h2>
+            <div id="modal-error" class="error-msg" aria-live="polite"></div>
+            <form id="contact-form">
+                <input type="hidden" id="contact-id">
+                <div class="form-group">
+                    <label for="contactFirstName">First Name *</label>
+                    <input type="text" id="contactFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactLastName">Last Name *</label>
+                    <input type="text" id="contactLastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">Phone</label>
+                    <input type="tel" id="contactPhone">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="close-modal-btn" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
