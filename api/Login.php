@@ -1,6 +1,11 @@
 <?php
 
 	$inData = getRequestInfo();
+	if ($inData === null || !isset($inData["login"]) || !isset($inData["password"]))
+	{
+		returnWithError("Invalid request");
+		exit();
+	}
 
 	include('config.php');
 	if( $conn->connect_error )
@@ -45,14 +50,24 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
-		sendResultInfoAsJson( $retValue );
+		$retValue = json_encode(array(
+			"id" => 0,
+			"firstName" => "",
+			"lastName" => "",
+			"error" => $err
+		));
+		sendResultInfoAsJson($retValue);
 	}
 	
 	function returnWithInfo( $firstName, $lastName, $id )
 	{
-		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
-		sendResultInfoAsJson( $retValue );
+		$retValue = json_encode(array(
+			"id" => (int)$id,
+			"firstName" => $firstName,
+			"lastName" => $lastName,
+			"error" => ""
+		));
+		sendResultInfoAsJson($retValue);
 	}
 	
 ?>

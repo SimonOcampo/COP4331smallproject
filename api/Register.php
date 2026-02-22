@@ -10,8 +10,8 @@
         exit;
     }
 
-    $firstName = isset($inData["firstName"]) ? trim($inData["firstName"]) : "";
-    $lastName  = isset($inData["lastName"])  ? trim($inData["lastName"])  : "";
+    $firstName = isset($inData["firstName"]) ? trim($inData["firstName"]) : (isset($inData["FirstName"]) ? trim($inData["FirstName"]) : "");
+    $lastName  = isset($inData["lastName"])  ? trim($inData["lastName"])  : (isset($inData["LastName"]) ? trim($inData["LastName"]) : "");
     $login     = isset($inData["login"])     ? trim($inData["login"])     : "";
     $password  = isset($inData["password"])  ? $inData["password"]        : "";
 
