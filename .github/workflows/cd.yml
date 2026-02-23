@@ -17,8 +17,7 @@ jobs:
           username: ${{ secrets.DO_USER }}
           key: ${{ secrets.DO_SSH_KEY }}
           passphrase: ${{ secrets.DO_SSH_PASSPHRASE }}
-          port: ${{ secrets.DO_PORT || '22' }}
-          script_stop: true
+          port: 22
           script: |
             set -euo pipefail
             cd "${{ secrets.DEPLOY_PATH }}"
