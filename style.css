@@ -28,6 +28,11 @@
 
 body {
     background-color: var(--apricot);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23187FC9' fill-opacity='0.06' d='M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,229.3C672,245,768,267,864,261.3C960,256,1056,224,1152,208C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E"), 
+        radial-gradient(ellipse at 20% 50%, rgba(101, 209, 226, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(24, 127, 201, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(101, 209, 226, 0.12) 0%, transparent 50%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-body);
     line-height: 1.6;
@@ -35,6 +40,14 @@ body {
 }
 
 /* ---------- Headers & Labels ---------- */
+.app-title {
+    text-align: center;
+    color: var(--navy);
+    font-size: 2.5rem;
+    margin-top: 50px;
+    letter-spacing: 1px;
+}
+
 h1 {
     color: var(--navy);
     font-size: 2rem;
