@@ -13,30 +13,6 @@ PHP + MySQL contact manager backend with GitHub Actions CI/CD.
 | **🚨 Pre-Flight** | **UCF IT Network Live Check** | **Mar 22** |
 | **🚀 Delivery** | **Presentation Day** | **Mar 24** |
 
-### Gantt Chart
-
-```mermaid
-gantt
-    title Contact Manager Project Timeline (Target: March 24)
-    dateFormat  YYYY-MM-DD
-    axisFormat  %b %d
-    
-    section Setup & Design
-    Github & Repo Setup       :a1, 2026-02-25, 2d
-    Database Design (ERD)     :a2, after a1, 3d
-    Digital Ocean/LAMP Setup  :a3, 2026-02-27, 4d
-
-    section Backend Dev
-    MySQL Implementation      :b1, after a2, 2d
-    Login/Register API (PHP)  :b2, after b1, 4d
-    CRUD Contacts API         :b3, after b2, 5d
-    SwaggerHub Config         :b4, after b3, 2d
-
-    section Frontend Dev
-    UI Layout (HTML/CSS)      :c1, 2026-03-02, 5d
-    AJAX Integration          :c2, after b2, 7d
-
-
 PHP + MySQL contact manager backend with GitHub Actions CI/CD.
 
 ## What is in this repo
@@ -142,10 +118,25 @@ See `CI_CD_SETUP.md` for setup details.
 - Do not commit real credentials in `api/config.php`.
 - Prefer environment-specific config and GitHub secrets for deployment credentials.
     
-    section Final Polish
-    Partial Search Logic      :d1, after c2, 3d
-    Lighthouse Audit          :d2, after d1, 2d
-    Slide Deck Creation       :d3, 2026-03-19, 3d
-    UCF IT Network Check      :milestone, 2026-03-22, 0d
-    Code Freeze & Practice    :d4, 2026-03-23, 1d
-    Presentation Day          :milestone, 2026-03-24, 0d
+### Gantt Chart
+
+```mermaid
+gantt
+    title Contact Manager Project Timeline (Target: March 24)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b %d
+    
+    section Setup & Design
+    Github & Repo Setup       :a1, 2026-02-25, 2d
+    Database Design (ERD)     :a2, after a1, 3d
+    Digital Ocean/LAMP Setup  :a3, 2026-02-27, 4d
+
+    section Backend Dev
+    MySQL Implementation      :b1, after a2, 2d
+    Login/Register API (PHP)  :b2, after b1, 4d
+    CRUD Contacts API         :b3, after b2, 5d
+    SwaggerHub Config         :b4, after b3, 2d
+
+    section Frontend Dev
+    UI Layout (HTML/CSS)      :c1, 2026-03-02, 5d
+    AJAX Integration          :c2, after b2, 7d
