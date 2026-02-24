@@ -14,7 +14,6 @@ PHP + MySQL contact manager backend with GitHub Actions CI/CD.
 | **🚀 Delivery** | **Presentation Day** | **Mar 24** |
 
 ### Gantt Chart
-*(GitHub automatically renders this chart)*
 
 ```mermaid
 gantt
@@ -37,7 +36,6 @@ gantt
     UI Layout (HTML/CSS)      :c1, 2026-03-02, 5d
     AJAX Integration          :c2, after b2, 7d
 
-# COP4331 Small Project
 
 PHP + MySQL contact manager backend with GitHub Actions CI/CD.
 
