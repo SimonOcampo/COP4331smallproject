@@ -210,6 +210,16 @@ async function handleContactSubmit(e) {
     const phone = document.getElementById('contactPhone').value.trim();
     const email = document.getElementById('contactEmail').value.trim();
 
+    // --- ADD THIS PHONE VALIDATION ---
+    // This regex only allows numbers, spaces, plus signs, dashes, and parentheses
+    const phoneRegex = /^[0-9\s\+\-\(\)]*$/; 
+    
+    if (phone !== "" && !phoneRegex.test(phone)) {
+        errorDiv.innerText = "Invalid phone number. Please use only numbers and standard symbols (-, +, (), spaces).";
+        return; // Stop the submission
+    }
+    // ---------------------------------
+
     const payload = {
         userId: currentUser.id,
         contactFirstName,
